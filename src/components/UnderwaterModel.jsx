@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useGLTF, Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
@@ -15,25 +15,28 @@ export default function UnderwaterModel({ path }) {
   }, []);
 
   const baseRotationY = Math.PI;
-
   const baseY = isMobile ? -0.5 : 0.2;
+
+  const optimizedScene = useMemo(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.frustumCulled = false;
+        child.castShadow = false;
+        child.receiveShadow = false;
+      }
+    });
+    return scene;
+  }, [scene]);
 
   useFrame((state) => {
     if (!modelRef.current) return;
 
-    const time = state.clock.getElapsedTime();
+    const t = state.clock.elapsedTime;
 
-    modelRef.current.rotation.y =
-      baseRotationY + Math.sin(time * 0.2) * 0.2;
-
-    modelRef.current.rotation.x =
-      Math.sin(time * 0.3) * 0.05;
-
-    modelRef.current.position.x =
-      Math.sin(time * 0.1) * 0.15;
-
-    modelRef.current.position.y =
-      baseY + Math.sin(time * 0.6) * 0.06;
+    modelRef.current.rotation.y = baseRotationY + Math.sin(t * 0.2) * 0.2;
+    modelRef.current.rotation.x = Math.sin(t * 0.3) * 0.05;
+    modelRef.current.position.x = Math.sin(t * 0.1) * 0.15;
+    modelRef.current.position.y = baseY + Math.sin(t * 0.6) * 0.06;
   });
 
   let scale = 0.08;
@@ -41,24 +44,21 @@ export default function UnderwaterModel({ path }) {
 
   if (path.includes("doc_ricketts_rov")) {
     scale = isMobile ? 0.75 : 1.5;
-    position = [0, baseY, 0];
   } else if (path.includes("underwater_play")) {
     scale = isMobile ? 0.002 : 0.0038;
     position = [0, baseY - 0.3, 0];
   }
 
   return (
-    <Float
-      speed={0.6}
-      rotationIntensity={0.1}
-      floatIntensity={0.25}
-    >
+    <Float speed={0.6} rotationIntensity={0.1} floatIntensity={0.25}>
       <primitive
         ref={modelRef}
-        object={scene}
+        object={optimizedScene}
         scale={scale}
         position={position}
       />
     </Float>
   );
 }
+
+useGLTF.preload("/models/octa_final.glb");

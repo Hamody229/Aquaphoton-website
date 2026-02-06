@@ -52,7 +52,7 @@ export default function Hero() {
             <ambientLight intensity={1.2} />
             <directionalLight position={[10, 10, 5]} intensity={2} />
             <pointLight position={[0, -5, -5]} color="#0044ff" intensity={2} />
-            <UnderwaterModel path="/octa_final/octa_final.glb" />
+            <UnderwaterModel path="/octa_final/comp_octa.glb" />
             <OrbitControls
               enableZoom={false}
               autoRotate
@@ -74,7 +74,7 @@ export default function Hero() {
           style={{
             fontFamily:
               '"Century Gothic", CenturyGothic, AppleGothic, sans-serif',
-            fontWeight: 900, 
+            fontWeight: 900,
           }}
           className="text-5xl sm:text-7xl md:text-[10rem] font-black tracking-tighter italic leading-none text-white drop-shadow-2xl"
         >
