@@ -58,7 +58,7 @@ export default function FAQ() {
         <div className="flex items-center gap-2 mb-6 text-blue-400">
           <div className="h-[1px] w-12 bg-current"></div>
           <span className="font-mono text-xs tracking-[0.4em] uppercase">
-            Lorem Ipsum
+            most asked questions
           </span>
         </div>
         <h2 className="text-6xl font-black mb-16 uppercase tracking-tighter italic">
