@@ -1,21 +1,54 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react"; 
+import { motion } from "framer-motion";
 
 export default function About() {
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== "undefined" ? window.innerWidth < 768 : true
+  );
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); 
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const stats = [
     { label: "Students Trained", value: "2000+" },
-    { label: "Workshops Delivered", value: "ROV, PCB & Robotics" }, 
+    { label: "Workshops Delivered", value: "ROV, PCB & Robotics" },
     { label: "Community Impact", value: "Hands-on STEM" },
     { label: "Mentorship", value: "Knowledge Sharing" }
   ];
 
+  
+  const containerAnim = isMobile 
+    ? { opacity: 1, y: 0 }
+    : { 
+        initial: { opacity: 0, y: 50 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, margin: "-100px" },
+        transition: { duration: 0.8 }
+      };
+
+  const logoAnim = isMobile
+    ? {} 
+    : {
+        animate: { y: [0, -20, 0] },
+        transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+      };
+
+  const getStatAnim = (index) => isMobile 
+    ? {} 
+    : {
+        initial: { opacity: 0, scale: 0.9 },
+        whileInView: { opacity: 1, scale: 1 },
+        transition: { delay: index * 0.1 }
+      };
+
   return (
     <section id="about" className="py-32 px-10 bg-ocean-900 text-white border-y border-white/5 relative overflow-hidden">
       <motion.div 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
+        {...containerAnim} 
         className="max-w-6xl mx-auto relative z-10"
       >
         <div className="flex flex-col lg:flex-row gap-16 items-center">
@@ -24,8 +57,7 @@ export default function About() {
           <div className="w-full lg:w-1/2 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]"></div>
             <motion.img 
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              {...logoAnim} 
               src="/Team_Logo.png" 
               alt="Logo" 
               className="relative z-10 w-full max-w-sm mx-auto drop-shadow-[0_0_30px_rgba(37,99,235,0.4)]" 
@@ -53,9 +85,7 @@ export default function About() {
               {stats.map((stat, index) => (
                 <motion.div 
                   key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
+                  {...getStatAnim(index)}
                   className="p-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl hover:border-blue-500/40 transition-colors group"
                 >
                   <p className="text-[10px] font-mono uppercase text-blue-500 mb-2 tracking-widest group-hover:text-blue-400 transition-colors">

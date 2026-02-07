@@ -1,10 +1,20 @@
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useMemo, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import UnderwaterModel from "./UnderwaterModel";
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== "undefined" ? window.innerWidth < 768 : true
+  );
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const bubbleCount = 25;
 
   const bubbles = useMemo(() => {
@@ -23,6 +33,18 @@ export default function Hero() {
       behavior: "smooth",
     });
   };
+
+  const textAnimation = isMobile
+    ? { 
+        initial: { opacity: 1, y: 0 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0 }    
+      }
+    : {
+        initial: { opacity: 0, y: 30 }, 
+        animate: { opacity: 1, y: 0 }, 
+        transition: { duration: 0.8, ease: "easeOut", delay: 0.2 }
+      };
 
   return (
     <section
@@ -81,14 +103,10 @@ export default function Hero() {
       <div className="absolute inset-0 z-20 bg-gradient-to-t from-ocean-950 via-ocean-900/40 to-transparent pointer-events-none" />
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ 
-            duration: 0.8, 
-            ease: "easeOut",
-            delay: 0.2 
-        }}
-        style={{ willChange: "transform, opacity" }}
+        initial={textAnimation.initial}
+        animate={textAnimation.animate}
+        transition={textAnimation.transition}
+        style={!isMobile ? { willChange: "transform, opacity" } : {}}
         className="relative z-30 max-w-5xl mx-auto px-4 text-center mt-20 md:mt-0"
       >
         <h1
@@ -124,7 +142,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1 }} 
+        transition={{ delay: 1 }}
         onClick={handleScroll}
         className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group"
       >
