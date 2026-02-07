@@ -29,6 +29,7 @@ export default function Hero() {
       id="home"
       className="h-screen w-full relative flex flex-col items-center justify-center md:justify-end pb-0 md:pb-40 overflow-hidden bg-ocean-900"
     >
+      {/* Bubbles Layer */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {bubbles.map((bubble) => (
           <motion.div
@@ -49,7 +50,7 @@ export default function Hero() {
               left: `${bubble.left}%`,
               width: bubble.size,
               height: bubble.size,
-              willChange: "transform", 
+              willChange: "transform",
             }}
             className="absolute rounded-full bg-blue-500/20"
           />
@@ -66,9 +67,7 @@ export default function Hero() {
             <ambientLight intensity={1.2} />
             <directionalLight position={[10, 10, 5]} intensity={2} />
             <pointLight position={[0, -5, -5]} color="#0044ff" intensity={2} />
-
             <UnderwaterModel path="/octa_final/comp_octa.glb" />
-
             <OrbitControls
               enableZoom={false}
               enablePan={false}
@@ -82,17 +81,19 @@ export default function Hero() {
       <div className="absolute inset-0 z-20 bg-gradient-to-t from-ocean-950 via-ocean-900/40 to-transparent pointer-events-none" />
 
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }} 
-        viewport={{ once: true, amount: 0.3 }} 
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        style={{ willChange: "transform" }} 
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ 
+            duration: 0.8, 
+            ease: "easeOut",
+            delay: 0.2 
+        }}
+        style={{ willChange: "transform, opacity" }}
         className="relative z-30 max-w-5xl mx-auto px-4 text-center mt-20 md:mt-0"
       >
         <h1
           style={{
-            fontFamily:
-              '"Century Gothic", CenturyGothic, AppleGothic, sans-serif',
+            fontFamily: '"Century Gothic", CenturyGothic, AppleGothic, sans-serif',
             fontWeight: 900,
           }}
           className="text-5xl sm:text-7xl md:text-[10rem] font-black tracking-tighter italic leading-none text-white drop-shadow-2xl"
@@ -123,7 +124,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1 }} 
         onClick={handleScroll}
         className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group"
       >
