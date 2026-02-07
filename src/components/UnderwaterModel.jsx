@@ -6,7 +6,9 @@ export default function UnderwaterModel({ path }) {
   const { scene } = useGLTF(path);
   const modelRef = useRef();
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -20,9 +22,14 @@ export default function UnderwaterModel({ path }) {
   const optimizedScene = useMemo(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
-        child.frustumCulled = false;
+        child.frustumCulled = true; 
         child.castShadow = false;
         child.receiveShadow = false;
+        
+        if (child.material) {
+          child.material.precision = "lowp";
+          child.material.flatShading = true; 
+        }
       }
     });
     return scene;
@@ -33,10 +40,14 @@ export default function UnderwaterModel({ path }) {
 
     const t = state.clock.elapsedTime;
 
-    modelRef.current.rotation.y = baseRotationY + Math.sin(t * 0.2) * 0.2;
-    modelRef.current.rotation.x = Math.sin(t * 0.3) * 0.05;
-    modelRef.current.position.x = Math.sin(t * 0.1) * 0.15;
-    modelRef.current.position.y = baseY + Math.sin(t * 0.6) * 0.06;
+    if (isMobile) {
+      modelRef.current.rotation.y = baseRotationY + Math.sin(t * 0.15) * 0.15;
+    } else {
+      modelRef.current.rotation.y = baseRotationY + Math.sin(t * 0.2) * 0.2;
+      modelRef.current.rotation.x = Math.sin(t * 0.3) * 0.05;
+      modelRef.current.position.x = Math.sin(t * 0.1) * 0.15;
+      modelRef.current.position.y = baseY + Math.sin(t * 0.6) * 0.06;
+    }
   });
 
   let scale = 0.08;
@@ -49,8 +60,23 @@ export default function UnderwaterModel({ path }) {
     position = [0, baseY - 0.3, 0];
   }
 
+  if (isMobile) {
+    return (
+      <primitive
+        ref={modelRef}
+        object={optimizedScene}
+        scale={scale}
+        position={position}
+      />
+    );
+  }
+
   return (
-    <Float speed={0.6} rotationIntensity={0.1} floatIntensity={0.25}>
+    <Float 
+      speed={0.4} 
+      rotationIntensity={0.08} 
+      floatIntensity={0.15}
+    >
       <primitive
         ref={modelRef}
         object={optimizedScene}
@@ -61,4 +87,5 @@ export default function UnderwaterModel({ path }) {
   );
 }
 
-useGLTF.preload("/models/octa_final.glb");
+// Preload the model
+useGLTF.preload("/octa_final/comp_octa.glb");

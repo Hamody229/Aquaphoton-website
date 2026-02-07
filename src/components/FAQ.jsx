@@ -13,13 +13,20 @@ const FAQItem = ({ question, answer }) => {
           {question}
         </span>
         <span
-          className={`text-2xl transition-transform duration-500 ${isOpen ? "rotate-45 text-blue-500" : "text-slate-600 group-hover:text-blue-400"}`}
+          className={`text-2xl transition-transform duration-300 ${
+            isOpen ? "rotate-45 text-blue-500" : "text-slate-600 group-hover:text-blue-400"
+          }`}
         >
           +
         </span>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-500 ${isOpen ? "max-h-60 pb-8 opacity-100" : "max-h-0 opacity-0"}`}
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-60 pb-8 opacity-100" : "max-h-0 opacity-0"
+        }`}
+        style={{
+          transform: isOpen ? 'translateY(0)' : 'translateY(-10px)',
+        }}
       >
         <p className="text-slate-400 font-light leading-relaxed max-w-3xl border-l-2 border-blue-500/30 pl-6">
           {answer}
@@ -34,7 +41,7 @@ export default function FAQ() {
     {
       question: "How can I join Aquaphoton Academy?",
       answer:
-        "We open membership opportunities during specific periods announced on our platforms.The process usually includes an application form followed by an assessment. The assessment covers both technical topics and soft skills.",
+        "We open membership opportunities during specific periods announced on our platforms. The process usually includes an application form followed by an assessment. The assessment covers both technical topics and soft skills.",
     },
     {
       question: "What are the requirements?",

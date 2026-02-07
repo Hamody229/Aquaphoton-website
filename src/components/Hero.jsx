@@ -15,7 +15,7 @@ export default function Hero() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const bubbleCount = 25;
+  const bubbleCount = isMobile ? 10 : 15;
 
   const bubbles = useMemo(() => {
     return [...Array(bubbleCount)].map((_, i) => ({
@@ -25,7 +25,7 @@ export default function Hero() {
       delay: Math.random() * 5,
       duration: Math.random() * 5 + 8,
     }));
-  }, []);
+  }, [bubbleCount]);
 
   const handleScroll = () => {
     window.scrollTo({
@@ -72,7 +72,6 @@ export default function Hero() {
               left: `${bubble.left}%`,
               width: bubble.size,
               height: bubble.size,
-              willChange: "transform",
             }}
             className="absolute rounded-full bg-blue-500/20"
           />
@@ -81,9 +80,13 @@ export default function Hero() {
 
       <div className="absolute top-0 left-0 w-full h-[65vh] md:h-full z-10 opacity-60 pointer-events-none">
         <Canvas
-          dpr={[1, 1.5]}
+          dpr={[1, isMobile ? 1 : 1.5]} 
           camera={{ position: [0, 1, 11], fov: 40 }}
-          gl={{ antialias: false }}
+          gl={{ 
+            antialias: false,
+            powerPreference: "high-performance", 
+          }}
+          frameloop="always"
         >
           <Suspense fallback={null}>
             <ambientLight intensity={1.2} />
@@ -94,7 +97,8 @@ export default function Hero() {
               enableZoom={false}
               enablePan={false}
               autoRotate
-              autoRotateSpeed={0.6}
+              autoRotateSpeed={isMobile ? 0.4 : 0.6} 
+              enableDamping={false} 
             />
           </Suspense>
         </Canvas>
@@ -106,7 +110,6 @@ export default function Hero() {
         initial={textAnimation.initial}
         animate={textAnimation.animate}
         transition={textAnimation.transition}
-        style={!isMobile ? { willChange: "transform, opacity" } : {}}
         className="relative z-30 max-w-5xl mx-auto px-4 text-center mt-20 md:mt-0"
       >
         <h1

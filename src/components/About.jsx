@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
   const [isMobile, setIsMobile] = useState(() => 
-    typeof window !== "undefined" ? window.innerWidth < 768 : true
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
   );
 
   useEffect(() => {
@@ -20,29 +20,30 @@ export default function About() {
     { label: "Mentorship", value: "Knowledge Sharing" }
   ];
 
-  
   const containerAnim = isMobile 
-    ? { opacity: 1, y: 0 }
+    ? { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 } }
     : { 
-        initial: { opacity: 0, y: 50 },
+        initial: { opacity: 0, y: 30 }, 
         whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, margin: "-100px" },
-        transition: { duration: 0.8 }
+        viewport: { once: true, margin: "-50px" },
+        transition: { duration: 0.6 }
       };
 
   const logoAnim = isMobile
-    ? {} 
+    ? { initial: {}, animate: {} } 
     : {
-        animate: { y: [0, -20, 0] },
-        transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+        initial: {},
+        animate: { y: [0, -15, 0] }, 
+        transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } 
       };
 
   const getStatAnim = (index) => isMobile 
-    ? {} 
+    ? { initial: { opacity: 1, scale: 1 }, animate: { opacity: 1, scale: 1 } } 
     : {
-        initial: { opacity: 0, scale: 0.9 },
+        initial: { opacity: 0, scale: 0.95 },
         whileInView: { opacity: 1, scale: 1 },
-        transition: { delay: index * 0.1 }
+        viewport: { once: true },
+        transition: { delay: index * 0.05, duration: 0.4 } 
       };
 
   return (
@@ -59,7 +60,8 @@ export default function About() {
             <motion.img 
               {...logoAnim} 
               src="/Team_Logo.png" 
-              alt="Logo" 
+              alt="Aquaphoton Logo" 
+              loading="lazy" 
               className="relative z-10 w-full max-w-sm mx-auto drop-shadow-[0_0_30px_rgba(37,99,235,0.4)]" 
             />
           </div>

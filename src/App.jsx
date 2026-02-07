@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
@@ -13,16 +13,18 @@ import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import SideNav from "./components/SideNav";
 
-const sectionVariant = {
-  hidden: { opacity: 0, y: 100 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
 const Home = () => {
+  const [isMobile, setIsMobile] = useState(() => 
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const sections = [
     { Component: About, id: "about" },
     { Component: Experience, id: "experience" },
@@ -30,6 +32,20 @@ const Home = () => {
     { Component: FAQ, id: "faq" },
     { Component: Contact, id: "contact" },
   ];
+
+  const sectionVariant = isMobile
+    ? {
+        hidden: { opacity: 1, y: 0 },
+        visible: { opacity: 1, y: 0 },
+      }
+    : {
+        hidden: { opacity: 0, y: 50 }, 
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.8, ease: "easeOut" }, 
+        },
+      };
 
   return (
     <>
@@ -45,7 +61,7 @@ const Home = () => {
           variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.05, margin: "-50px" }}
           className="w-full"
         >
           <Component />
@@ -66,7 +82,7 @@ export default function App() {
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: "smooth" });
-        }, 100);
+        }, 50);
       }
     } else {
       window.scrollTo(0, 0);

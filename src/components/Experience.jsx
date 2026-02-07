@@ -67,13 +67,17 @@ const experiences = [
 
 const ExperienceCard = ({ exp, index, isMobile }) => {
   
+
   const cardAnim = isMobile
-    ? { opacity: 1, x: 0 } 
+    ? { 
+        initial: { opacity: 1, x: 0 },
+        animate: { opacity: 1, x: 0 }
+      } 
     : {
         initial: { opacity: 0, x: index % 2 === 0 ? 50 : -50 },
         whileInView: { opacity: 1, x: 0 },
-        viewport: { once: true },
-        transition: { duration: 1.2, ease: "easeOut", delay: index * 0.2 }
+        viewport: { once: true, margin: "-100px" }, 
+        transition: { duration: 0.6, ease: "easeOut" } 
       };
 
   return (
@@ -83,6 +87,7 @@ const ExperienceCard = ({ exp, index, isMobile }) => {
           src={exp.icon}
           alt="icon"
           className="w-6 h-6 object-contain opacity-80"
+          loading="lazy" 
         />
       </div>
 
@@ -110,6 +115,7 @@ const ExperienceCard = ({ exp, index, isMobile }) => {
               src={exp.rovImage}
               alt={`ROV ${exp.year}`}
               className="w-full h-full object-contain object-center transform group-hover/image:scale-105 group-hover/image:brightness-110 transition-all duration-700 ease-in-out"
+              loading="lazy" 
             />
           </div>
         )}
@@ -140,11 +146,15 @@ export default function Experience() {
   }, []);
 
   const titleAnim = isMobile
-    ? { opacity: 1 } 
+    ? { 
+        initial: { opacity: 1 },
+        animate: { opacity: 1 }
+      } 
     : {
         initial: { opacity: 0 },
         whileInView: { opacity: 1 },
-        transition: { duration: 1.5 }
+        viewport: { once: true },
+        transition: { duration: 0.8 } 
       };
 
   return (
