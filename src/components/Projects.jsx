@@ -21,7 +21,7 @@ export default function Projects() {
       title: "Rovers",
       subtitle: "(UGVs)",
       category: "Ground Systems",
-      image: "/ROVER.png",
+      image: "/ROVER2.png",
       features: [
         "Ground vehicles with autonomous and manual modes",
         "Obstacle detection and navigation",

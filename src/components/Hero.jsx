@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import UnderwaterModel from "./UnderwaterModel";
 
 export default function Hero() {
+  const bubbleCount = 25;
+
   const bubbles = useMemo(() => {
-    return [...Array(50)].map((_, i) => ({
+    return [...Array(bubbleCount)].map((_, i) => ({
       id: i,
       size: Math.random() * 10 + 5,
       left: Math.random() * 100,
@@ -15,11 +17,19 @@ export default function Hero() {
     }));
   }, []);
 
+  const handleScroll = () => {
+    window.scrollTo({
+      top: window.innerHeight, 
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="home"
       className="h-screen w-full relative flex flex-col items-center justify-center md:justify-end pb-0 md:pb-40 overflow-hidden bg-ocean-900"
     >
+      {/* Bubbles Layer */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {bubbles.map((bubble) => (
           <motion.div
@@ -40,21 +50,29 @@ export default function Hero() {
               left: `${bubble.left}%`,
               width: bubble.size,
               height: bubble.size,
+              willChange: "transform",
             }}
-            className="absolute rounded-full bg-blue-500/10 blur-[1px]"
+            className="absolute rounded-full bg-blue-500/20"
           />
         ))}
       </div>
 
-      <div className="absolute top-0 left-0 w-full h-[65vh] md:h-full z-10 opacity-60 blur-[1px] pointer-events-none">
-        <Canvas camera={{ position: [0, 1, 11], fov: 40 }}>
+      <div className="absolute top-0 left-0 w-full h-[65vh] md:h-full z-10 opacity-60 pointer-events-none">
+        <Canvas
+          dpr={[1, 1.5]}
+          camera={{ position: [0, 1, 11], fov: 40 }}
+          gl={{ antialias: false }}
+        >
           <Suspense fallback={null}>
             <ambientLight intensity={1.2} />
             <directionalLight position={[10, 10, 5]} intensity={2} />
             <pointLight position={[0, -5, -5]} color="#0044ff" intensity={2} />
+
             <UnderwaterModel path="/octa_final/comp_octa.glb" />
+
             <OrbitControls
               enableZoom={false}
+              enablePan={false}
               autoRotate
               autoRotateSpeed={0.6}
             />
@@ -87,7 +105,6 @@ export default function Hero() {
 
         <div className="w-16 md:w-24 h-1 bg-blue-600 mx-auto mb-6 md:mb-8 rounded-full shadow-[0_0_10px_#2563eb]" />
 
-        {/* Description */}
         <div className="max-w-3xl mx-auto space-y-3 md:space-y-4">
           <p className="text-base sm:text-xl md:text-2xl text-white font-medium leading-relaxed drop-shadow-lg px-2">
             A hands-on engineering academy focused on designing, building, and
@@ -102,17 +119,17 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* --- Scroll Button --- */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3"
+        onClick={handleScroll}
+        className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group" 
       >
-        <span className="text-[8px] font-mono uppercase tracking-[0.3em] text-blue-300/80 animate-pulse">
+        <span className="text-[8px] font-mono uppercase tracking-[0.3em] text-blue-300/80 animate-pulse group-hover:text-blue-200 transition-colors">
           Scroll to Dive
         </span>
-        <div className="w-5 h-8 md:w-6 md:h-10 border-2 border-blue-400/30 rounded-full flex justify-center p-1 relative backdrop-blur-sm bg-blue-900/10">
+        <div className="w-5 h-8 md:w-6 md:h-10 border-2 border-blue-400/30 rounded-full flex justify-center p-1 relative backdrop-blur-sm bg-blue-900/10 group-hover:border-blue-400/60 transition-colors">
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

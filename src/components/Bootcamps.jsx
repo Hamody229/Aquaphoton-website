@@ -70,7 +70,7 @@ const sessionData = [
   {
     id: 7,
     type: "AlexDuino",
-    category: "Electronics",
+    category: "AlexDuino",
     title: "Basic Electronics",
     image: "/alex-duino.jpg",
     date: "2026",
@@ -80,7 +80,7 @@ const sessionData = [
   {
     id: 8,
     type: "AlexDuino",
-    category: "Embedded",
+    category: "AlexDuino",
     title: "Communication Protocols",
     image: "/alexduino2.jpg",
     date: "2026",
@@ -90,7 +90,7 @@ const sessionData = [
   {
     id: 9,
     type: "AlexDuino",
-    category: "Event",
+    category: "AlexDuino",
     title: "Hardware Carnival",
     image: "/alexduino3.jpg",
     date: "2026",
@@ -107,7 +107,7 @@ const sessionData = [
     image: "/mate25.jpg",
     date: "2025",
     description:
-      "Competing at the highest level. The team developed a state-of-the-art ROV capable of complex underwater tasks, focusing on AI integration and autonomous navigation for the 2025 challenge.",
+      "2025 marked a year of breakthrough innovation, where we secured 1st Place in the UMVC Competition. Our technical prowess was further recognized at the MATE ROV Regionals with the Best Innovative Solution award, alongside 3rd Place overall and Best Marketing Display.",
   },
   {
     id: 11,
@@ -117,7 +117,7 @@ const sessionData = [
     image: "/mate24.jpg",
     date: "2024",
     description:
-      "A year of resilience and innovation. Our 2024 participation showcased a completely redesigned mechanical structure and a highly efficient power management system, securing top positions regionally.",
+      "2024 was a year of global distinction, as we secured 6th Place in the MATE ROV International Competition and 5th Place in the NOAA Ocean Exploration Video International Challenge. Domestically, we earned 2nd Place and swept the technical awards, including Best Technical Report, Presentation, and Innovative Solution, as well as Best Pilot and Best Marketing Display.",
   },
   {
     id: 12,
@@ -127,11 +127,31 @@ const sessionData = [
     image: "/mate23.jpg",
     date: "2023",
     description:
-      "Our 2023 participation was a defining moment, culminating in 1st Place. This victory was powered by a complete ground-up mechanical redesign for superior hydrodynamics and a highly optimized power management system.",
+      "2023 was a landmark year for our technical growth, as we dominated the MATE ROV Regional Competition with a 1st Place finish. Our excellence in systems engineering was recognized with awards for Best Programming, Image Processing, and Software Solution, alongside a strong global performance ranking 5th Place in the International Competition.",
+  },
+  {
+    id: 13,
+    type: "Competition",
+    category: "Regional",
+    title: "MATE ROV 2022",
+    image: "/mate22.jpg",
+    date: "2022",
+    description:
+      "Our 2022 participation was a defining moment, securing awards for Best Technical Report and Best Marketing Display at the MATE ROV Regional Competition. These accolades validated the depth of our engineering documentation and the professional presentation of our comprehensive mechanical redesign.",
+  },
+  {
+    id: 14,
+    type: "Competition",
+    category: "Regional",
+    title: "MATE ROV 2021",
+    image: "/mate21.jpg",
+    date: "2021",
+    description:
+      "In 2021, we achieved global recognition by securing 5th Place at the MATE ROV International Competition. Locally, we demonstrated consistency with a 2nd Place finish and the Best Technical Report award at the Regionals.",
   },
 ];
 
-const tabs = ["Bootcamps", "Training Sessions", "AlexDuino", "Competitions"];
+const tabs = ["Bootcamps", "Training Sessions", "Competitions"];
 
 export default function Sessions() {
   const [activeTab, setActiveTab] = useState("Bootcamps");
@@ -139,8 +159,9 @@ export default function Sessions() {
 
   const filteredItems = sessionData.filter((item) => {
     if (activeTab === "Bootcamps") return item.type === "Bootcamp";
-    if (activeTab === "Training Sessions") return item.type === "Training";
-    if (activeTab === "AlexDuino") return item.type === "AlexDuino";
+    if (activeTab === "Training Sessions") {
+      return item.type === "Training" || item.type === "AlexDuino";
+    }
     if (activeTab === "Competitions") return item.type === "Competition";
     return false;
   });

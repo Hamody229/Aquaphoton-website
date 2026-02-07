@@ -39,7 +39,7 @@ export default function FAQ() {
     {
       question: "What are the requirements?",
       answer:
-        "Passion for engineering and learning Commitment and teamwork No prior experience required — we teach from the ground up",
+        "We value passion for engineering and learning, commitment and teamwork, and welcome all participants — no prior experience required, as we teach from the ground up.",
     },
     {
       question: "Which majors can apply?",
@@ -64,7 +64,7 @@ export default function FAQ() {
         <h2 className="text-6xl font-black mb-16 uppercase tracking-tighter italic">
           FAQ
         </h2>
-        <div className="bg-white/[0.02] rounded-[3rem] p-10 md:p-16 border border-white/5 backdrop-blur-xl shadow-2xl">
+        <div className="bg-white/2 rounded-[3rem] p-10 md:p-16 border border-white/5 backdrop-blur-xl shadow-2xl">
           {faqs.map((item, index) => (
             <FAQItem key={index} {...item} />
           ))}

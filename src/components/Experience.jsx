@@ -6,6 +6,7 @@ const experiences = [
     year: "2025",
     company: "Aquaphoton",
     icon: "/ap.png",
+    rovImage: "/ROVS/rov25.png",
     achievements: [
       "Third place in MATE ROV Regional Competition.",
       "First place in UMVC Competition.",
@@ -17,6 +18,7 @@ const experiences = [
     year: "2024",
     company: "Aquaphoton",
     icon: "/ap.png",
+    rovImage: "/ROVS/rov24.png",
     achievements: [
       "Fifth Place in 2024 NOAA Ocean Exploration Video International Challenge",
       "Sixth place in MATE ROV International competition.",
@@ -30,6 +32,7 @@ const experiences = [
     year: "2023",
     company: "Aquaphoton",
     icon: "/ap.png",
+    rovImage: "/ROVS/rov23.png",
     achievements: [
       "Fifth place in MATE ROV international competition.",
       "First place in MATE ROV regional competition.",
@@ -43,9 +46,21 @@ const experiences = [
     year: "2022",
     company: "Aquaphoton",
     icon: "/ap.png",
+    rovImage: "/ROVS/rov22.png",
     achievements: [
       "Best technical report and marketing display in MATE ROV regional competition.",
       "Best Marketing display in 2022 MATE ROV regional competition",
+    ],
+  },
+  {
+    year: "2021",
+    company: "Aquaphoton",
+    icon: "/ap.png",
+    rovImage: "/ROVS/rov21.png",
+    achievements: [
+      "Fifth place in MATE ROV international competition",
+      "Second Place in 2021 MATE ROV regional competition",
+      "Best technical report in 2021 MATE ROV regional competition.",
     ],
   },
 ];
@@ -66,26 +81,43 @@ const ExperienceCard = ({ exp, index }) => (
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 1.2, ease: "easeOut", delay: index * 0.2 }}
-      className="w-[calc(100%-4rem)] md:w-[45%] bg-white/5 backdrop-blur-lg border border-white/10 p-6 rounded-2xl hover:border-blue-500/40 transition-all shadow-xl"
+      className="w-[calc(100%-4rem)] md:w-[45%] bg-white/5 backdrop-blur-lg border border-white/10 p-6 rounded-2xl hover:border-blue-500/40 transition-all shadow-xl overflow-hidden"
     >
-      <span className="text-blue-500 font-black text-2xl block mb-1">
-        {exp.year}
-      </span>
-      <p className="text-gray-400 font-mono text-sm mb-4 uppercase tracking-widest">
-        {exp.company}
-      </p>
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <span className="text-blue-500 font-black text-2xl block mb-1">
+            {exp.year}
+          </span>
+          <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">
+            {exp.company}
+          </p>
+        </div>
+      </div>
+      {exp.rovImage && (
+        <div className="w-full h-56 mb-5 rounded-xl overflow-hidden border border-blue-500/30 relative group/image shadow-[inset_0_0_30px_rgba(0,10,40,0.7)] bg-[#0a1124]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(3,7,18,0.8)_100%)] z-10 pointer-events-none mix-blend-hard-light" />
+          <div className="absolute inset-0 bg-blue-900/10 z-10 pointer-events-none mix-blend-overlay" />
+
+          <img
+            src={exp.rovImage}
+            alt={`ROV ${exp.year}`}
+            className="w-full h-full object-contain object-center transform group-hover/image:scale-105 group-hover/image:brightness-110 transition-all duration-700 ease-in-out"
+          />
+        </div>
+      )}
 
       <ul className="space-y-2">
         {exp.achievements.map((item, i) => (
           <li key={i} className="text-gray-200 text-sm flex items-start">
-            <span className="text-blue-500 mr-2">•</span>
-            {item}
+            <span className="text-blue-500 mr-2 shrink-0">•</span>
+            <span>{item}</span>
           </li>
         ))}
       </ul>
     </motion.div>
   </div>
 );
+
 export default function Experience() {
   return (
     <section
@@ -97,7 +129,7 @@ export default function Experience() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
-          className="text-6xl font-black mb-24 uppercase italic text-center"
+          className="text-6xl font-black mb-24 uppercase italic text-center text-white"
         >
           Our <span className="text-blue-600">Titles</span>
         </motion.h2>
