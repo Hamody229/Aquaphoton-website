@@ -36,14 +36,26 @@ export default function Hero() {
 
   const textAnimation = isMobile
     ? { 
-        initial: { opacity: 1, y: 0 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0 }    
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.6, ease: "easeOut" }
       }
     : {
-        initial: { opacity: 0, y: 30 }, 
+        initial: { opacity: 0, y: 20 }, 
         animate: { opacity: 1, y: 0 }, 
         transition: { duration: 0.8, ease: "easeOut", delay: 0.2 }
+      };
+
+  const logoAnimation = isMobile
+    ? {
+        initial: { opacity: 0, scale: 0.95 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0.5, ease: "easeOut" }
+      }
+    : {
+        initial: { opacity: 0, scale: 0.9 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0.8, ease: "easeOut" }
       };
 
   return (
@@ -80,11 +92,11 @@ export default function Hero() {
 
       <div className="absolute top-0 left-0 w-full h-[65vh] md:h-full z-10 opacity-60 pointer-events-none">
         <Canvas
-          dpr={[1, isMobile ? 1 : 1.5]} 
+          dpr={[1, isMobile ? 1 : 1.5]}
           camera={{ position: [0, 1, 11], fov: 40 }}
           gl={{ 
             antialias: false,
-            powerPreference: "high-performance", 
+            powerPreference: "high-performance",
           }}
           frameloop="always"
         >
@@ -97,8 +109,8 @@ export default function Hero() {
               enableZoom={false}
               enablePan={false}
               autoRotate
-              autoRotateSpeed={isMobile ? 0.4 : 0.6} 
-              enableDamping={false} 
+              autoRotateSpeed={isMobile ? 0.4 : 0.6}
+              enableDamping={false}
             />
           </Suspense>
         </Canvas>
@@ -107,12 +119,11 @@ export default function Hero() {
       <div className="absolute inset-0 z-20 bg-gradient-to-t from-ocean-950 via-ocean-900/40 to-transparent pointer-events-none" />
 
       <motion.div
-        initial={textAnimation.initial}
-        animate={textAnimation.animate}
-        transition={textAnimation.transition}
+        {...textAnimation}
         className="relative z-30 max-w-5xl mx-auto px-4 text-center mt-20 md:mt-0"
       >
-        <h1
+        <motion.h1
+          {...logoAnimation}
           style={{
             fontFamily: '"Century Gothic", CenturyGothic, AppleGothic, sans-serif',
             fontWeight: 900,
@@ -120,15 +131,31 @@ export default function Hero() {
           className="text-5xl sm:text-7xl md:text-[10rem] font-black tracking-tighter italic leading-none text-white drop-shadow-2xl"
         >
           AQUA<span className="text-blue-600">PHOTON</span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-white-300 font-mono text-xs sm:text-sm md:text-2xl tracking-[0.5em] md:tracking-[0.8em] uppercase mt-2 mb-4 md:mb-8 font-bold drop-shadow-md">
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: isMobile ? 0.3 : 0.5, duration: 0.6 }}
+          className="text-white-300 font-mono text-xs sm:text-sm md:text-2xl tracking-[0.5em] md:tracking-[0.8em] uppercase mt-2 mb-4 md:mb-8 font-bold drop-shadow-md"
+        >
           Academy
-        </p>
+        </motion.p>
 
-        <div className="w-16 md:w-24 h-1 bg-blue-600 mx-auto mb-6 md:mb-8 rounded-full shadow-[0_0_10px_#2563eb]" />
+        {/* Animated divider */}
+        <motion.div 
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: isMobile ? "4rem" : "6rem", opacity: 1 }}
+          transition={{ delay: isMobile ? 0.4 : 0.6, duration: 0.8, ease: "easeOut" }}
+          className="h-1 bg-blue-600 mx-auto mb-6 md:mb-8 rounded-full shadow-[0_0_10px_#2563eb]" 
+        />
 
-        <div className="max-w-3xl mx-auto space-y-3 md:space-y-4">
+        <motion.div 
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: isMobile ? 0.5 : 0.8, duration: 0.6 }}
+          className="max-w-3xl mx-auto space-y-3 md:space-y-4"
+        >
           <p className="text-base sm:text-xl md:text-2xl text-white font-medium leading-relaxed drop-shadow-lg px-2">
             A hands-on engineering academy focused on designing, building, and
             competing with <span className="text-blue-400 font-bold">ROVs </span>
@@ -139,13 +166,14 @@ export default function Hero() {
             We turn theory into real hardware, empowering students to innovate,
             experiment, and solve real-world engineering challenges.
           </p>
-        </div>
+        </motion.div>
       </motion.div>
 
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: isMobile ? 0.8 : 1.2 }}
         onClick={handleScroll}
         className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group"
       >

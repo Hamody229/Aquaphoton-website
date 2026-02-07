@@ -21,29 +21,99 @@ export default function About() {
   ];
 
   const containerAnim = isMobile 
-    ? { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 } }
-    : { 
-        initial: { opacity: 0, y: 30 }, 
-        whileInView: { opacity: 1, y: 0 },
+    ? { 
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
         viewport: { once: true, margin: "-50px" },
         transition: { duration: 0.6 }
+      }
+    : { 
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, margin: "-50px" },
+        transition: { duration: 0.8 }
       };
 
   const logoAnim = isMobile
-    ? { initial: {}, animate: {} } 
+    ? {
+        initial: { opacity: 0, scale: 0.9 },
+        whileInView: { opacity: 1, scale: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.6 }
+      }
     : {
-        initial: {},
-        animate: { y: [0, -15, 0] }, 
-        transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } 
+        initial: { opacity: 0, scale: 0.9 },
+        whileInView: { opacity: 1, scale: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.8 }
+      };
+
+  const floatAnim = isMobile
+    ? {} 
+    : {
+        animate: { y: [0, -12, 0] },
+        transition: { 
+          duration: 4, 
+          repeat: Infinity, 
+          ease: "easeInOut",
+          repeatType: "reverse"
+        }
+      };
+
+  const headerAnim = isMobile
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.5, delay: 0.2 }
+      }
+    : {
+        initial: { opacity: 0, x: -20 },
+        whileInView: { opacity: 1, x: 0 },
+        viewport: { once: true },
+        transition: { duration: 0.6, delay: 0.2 }
+      };
+
+  const titleAnim = isMobile
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.5, delay: 0.3 }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        transition: { duration: 0.7, delay: 0.3 }
+      };
+
+  const descAnim = isMobile
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.5, delay: 0.4 }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        transition: { duration: 0.7, delay: 0.4 }
       };
 
   const getStatAnim = (index) => isMobile 
-    ? { initial: { opacity: 1, scale: 1 }, animate: { opacity: 1, scale: 1 } } 
+    ? { 
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.4, delay: 0.5 + (index * 0.08) } 
+      } 
     : {
-        initial: { opacity: 0, scale: 0.95 },
+        initial: { opacity: 0, scale: 0.9 },
         whileInView: { opacity: 1, scale: 1 },
         viewport: { once: true },
-        transition: { delay: index * 0.05, duration: 0.4 } 
+        transition: { duration: 0.5, delay: 0.5 + (index * 0.1) }
       };
 
   return (
@@ -56,38 +126,65 @@ export default function About() {
           
           {/* --- Logo Section --- */}
           <div className="w-full lg:w-1/2 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]"></div>
-            <motion.img 
-              {...logoAnim} 
-              src="/Team_Logo.png" 
-              alt="Aquaphoton Logo" 
-              loading="lazy" 
-              className="relative z-10 w-full max-w-sm mx-auto drop-shadow-[0_0_30px_rgba(37,99,235,0.4)]" 
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]"
             />
+            
+            <motion.div {...floatAnim}>
+              <motion.img 
+                {...logoAnim}
+                src="/Team_Logo.png" 
+                alt="Aquaphoton Logo" 
+                loading="lazy"
+                className="relative z-10 w-full max-w-sm mx-auto drop-shadow-[0_0_30px_rgba(37,99,235,0.4)]" 
+              />
+            </motion.div>
           </div>
 
           {/* --- Content Section --- */}
           <div className="w-full lg:w-1/2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="h-[1px] w-12 bg-blue-500"></div>
+            <motion.div 
+              {...headerAnim}
+              className="flex items-center gap-2 mb-6"
+            >
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "3rem" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="h-[1px] bg-blue-500"
+              />
               <span className="text-blue-400 font-mono text-xs tracking-[0.4em] uppercase">Our Mission</span>
-            </div>
+            </motion.div>
             
-            <h2 className="text-6xl md:text-7xl font-black mb-8 uppercase tracking-tighter leading-none italic">
+            {/* Title */}
+            <motion.h2 
+              {...titleAnim}
+              className="text-6xl md:text-7xl font-black mb-8 uppercase tracking-tighter leading-none italic"
+            >
               About <span className="text-blue-600">Us</span>
-            </h2>
+            </motion.h2>
 
-            <p className="text-lg text-slate-300 leading-relaxed mb-12 max-w-xl font-light">
+            {/* Description */}
+            <motion.p 
+              {...descAnim}
+              className="text-lg text-slate-300 leading-relaxed mb-12 max-w-xl font-light"
+            >
               Aquaphoton Academy believes engineering should create <span className="text-white font-bold">real impact</span>. 
               We are dedicated to providing technical mentoring for beginners and fostering a community of innovation.
-            </p>
+            </motion.p>
 
-            {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {stats.map((stat, index) => (
                 <motion.div 
                   key={index}
                   {...getStatAnim(index)}
+                  whileHover={isMobile ? {} : { scale: 1.03 }}
+                  transition={{ duration: 0.2 }}
                   className="p-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl hover:border-blue-500/40 transition-colors group"
                 >
                   <p className="text-[10px] font-mono uppercase text-blue-500 mb-2 tracking-widest group-hover:text-blue-400 transition-colors">
