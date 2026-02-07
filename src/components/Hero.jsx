@@ -19,7 +19,7 @@ export default function Hero() {
 
   const handleScroll = () => {
     window.scrollTo({
-      top: window.innerHeight, 
+      top: window.innerHeight,
       behavior: "smooth",
     });
   };
@@ -29,7 +29,6 @@ export default function Hero() {
       id="home"
       className="h-screen w-full relative flex flex-col items-center justify-center md:justify-end pb-0 md:pb-40 overflow-hidden bg-ocean-900"
     >
-      {/* Bubbles Layer */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {bubbles.map((bubble) => (
           <motion.div
@@ -50,7 +49,7 @@ export default function Hero() {
               left: `${bubble.left}%`,
               width: bubble.size,
               height: bubble.size,
-              willChange: "transform",
+              willChange: "transform", 
             }}
             className="absolute rounded-full bg-blue-500/20"
           />
@@ -84,8 +83,10 @@ export default function Hero() {
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.3 }} 
         transition={{ duration: 1.2, ease: "easeOut" }}
+        style={{ willChange: "transform" }} 
         className="relative z-30 max-w-5xl mx-auto px-4 text-center mt-20 md:mt-0"
       >
         <h1
@@ -124,7 +125,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         onClick={handleScroll}
-        className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group" 
+        className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center gap-3 cursor-pointer group"
       >
         <span className="text-[8px] font-mono uppercase tracking-[0.3em] text-blue-300/80 animate-pulse group-hover:text-blue-200 transition-colors">
           Scroll to Dive
