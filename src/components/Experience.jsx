@@ -5,45 +5,49 @@ const experiences = [
   {
     year: "2025",
     company: "Aquaphoton",
-    icon: "/Team_Logo.png",
+    icon: "/ap.png",
     achievements: [
-      "First place in UMVC Competition.",
       "Third place in MATE ROV Regional Competition.",
+      "First place in UMVC Competition.",
       "Best Marketing Display in MATE ROV Regional Competition.",
-      "Best Innovative Solution in MATE ROV Regional Competition."
-    ]
+      "Best Innovative Solution in MATE ROV Regional Competition.",
+    ],
   },
   {
     year: "2024",
     company: "Aquaphoton",
-    icon: "/Team_Logo.png",
+    icon: "/ap.png",
     achievements: [
+      "Fifth Place in 2024 NOAA Ocean Exploration Video International Challenge",
+      "Sixth place in MATE ROV International competition.",
       "Second place in MATE ROV competition.",
-      "Best marketing display in MATE ROV competition.",
       "Best technical report, presentation, and innovative solution.",
       "Best pilot in MATE ROV competition.",
-      "Sixth place in MATE ROV International competition."
-    ]
+      "Best marketing display in MATE ROV competition.",
+    ],
   },
   {
     year: "2023",
     company: "Aquaphoton",
-    icon: "/Team_Logo.png",
+    icon: "/ap.png",
     achievements: [
-      "First place in MATE ROV regional competition.",
       "Fifth place in MATE ROV international competition.",
+      "First place in MATE ROV regional competition.",
+      "Best Pilot in 2023 MATE ROV regional competition",
+      "Best Programming and Image Processing in 2023 MATE ROV regional competition",
       "Best technical report, pilot and software solution.",
-      "Third place in Underwater Robotics Challenges (UWRC) Egypt."
-    ]
+      "Third place in Underwater Robotics Challenges (UWRC) Egypt.",
+    ],
   },
   {
     year: "2022",
     company: "Aquaphoton",
-    icon: "/Team_Logo.png",
+    icon: "/ap.png",
     achievements: [
-      "Best technical report and marketing display in MATE ROV regional competition."
-    ]
-  }
+      "Best technical report and marketing display in MATE ROV regional competition.",
+      "Best Marketing display in 2022 MATE ROV regional competition",
+    ],
+  },
 ];
 
 const ExperienceCard = ({ exp, index }) => (
@@ -64,9 +68,13 @@ const ExperienceCard = ({ exp, index }) => (
       transition={{ duration: 1.2, ease: "easeOut", delay: index * 0.2 }}
       className="w-[calc(100%-4rem)] md:w-[45%] bg-white/5 backdrop-blur-lg border border-white/10 p-6 rounded-2xl hover:border-blue-500/40 transition-all shadow-xl"
     >
-      <span className="text-blue-500 font-black text-2xl block mb-1">{exp.year}</span>
-      <p className="text-gray-400 font-mono text-sm mb-4 uppercase tracking-widest">{exp.company}</p>
-      
+      <span className="text-blue-500 font-black text-2xl block mb-1">
+        {exp.year}
+      </span>
+      <p className="text-gray-400 font-mono text-sm mb-4 uppercase tracking-widest">
+        {exp.company}
+      </p>
+
       <ul className="space-y-2">
         {exp.achievements.map((item, i) => (
           <li key={i} className="text-gray-200 text-sm flex items-start">
@@ -94,7 +102,7 @@ export default function Experience() {
           Our <span className="text-blue-600">Titles</span>
         </motion.h2>
 
-        <div className="absolute left-5 md:left-1/2 top-40 bottom-0 w-[2px] bg-gradient-to-b from-blue-600 via-blue-900/20 to-transparent md:-translate-x-1/2" />
+        <div className="absolute left-5 md:left-1/2 top-40 bottom-0 w-[2px] bg-gradient-to-b from-blue-600 via-blue-900/20 via-[90%] to-transparent md:-translate-x-1/2" />
 
         <div className="space-y-12">
           {experiences.map((exp, index) => (

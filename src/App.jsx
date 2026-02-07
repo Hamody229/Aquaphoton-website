@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -24,15 +23,25 @@ const sectionVariant = {
 };
 
 const Home = () => {
-  const sections = [About, Experience, Technologies, FAQ, Contact];
+  const sections = [
+    { Component: About, id: "about" },
+    { Component: Experience, id: "experience" },
+    { Component: Technologies, id: "technologies" },
+    { Component: FAQ, id: "faq" },
+    { Component: Contact, id: "contact" },
+  ];
 
   return (
     <>
       <SideNav />
-      <Hero />
-      {sections.map((Component, index) => (
+      <div id="home">
+        <Hero />
+      </div>
+
+      {sections.map(({ Component, id }, index) => (
         <motion.div
           key={index}
+          id={id}
           variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
@@ -47,11 +56,22 @@ const Home = () => {
 };
 
 export default function App() {
-  const { pathname } = useLocation();
+  const { pathname, hash, key } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (hash) {
+      const id = hash.replace("#", "");
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash, key]);
 
   return (
     <div className="bg-ocean-900 min-h-screen text-white selection:bg-blue-500/30 selection:text-white relative font-sans overflow-x-hidden">

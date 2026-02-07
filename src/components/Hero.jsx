@@ -91,8 +91,8 @@ export default function Hero() {
         <div className="max-w-3xl mx-auto space-y-3 md:space-y-4">
           <p className="text-base sm:text-xl md:text-2xl text-white font-medium leading-relaxed drop-shadow-lg px-2">
             A hands-on engineering academy focused on designing, building, and
-            competing with <span className="text-blue-400 font-bold">ROVs</span>{" "}
-            & Rovers.
+            competing with <span className="text-blue-400 font-bold">ROVs </span>
+            & <span className="text-stone-400 font-bold">Rovers</span>.
           </p>
 
           <p className="text-slate-300 text-[10px] sm:text-xs md:text-base font-light leading-relaxed mx-auto max-w-xl drop-shadow-md px-4">
